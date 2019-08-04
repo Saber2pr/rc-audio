@@ -1,0 +1,60 @@
+@radius: 1.5rem;
+@baseColor: #bde3f8;
+@color: #43ace9;
+
+.Audio {
+  width: @radius;
+  height: @radius;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: inherit;
+
+  i {
+    font-size: @radius / 2;
+    z-index: 100;
+  }
+
+  .Base(@w: 100%, @h: 100%) {
+    position: absolute;
+    width: @w;
+    height: @h;
+    border-radius: 50%;
+  }
+
+  .Base-Color {
+    background-color: @baseColor;
+  }
+
+  .Color {
+    background-color: @color;
+  }
+
+  &-Base {
+    width: 100%;
+    height: 100%;
+    background-color: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+
+    &-0 {
+      .Base();
+    }
+    &-1 {
+      .Base();
+      clip: rect(0, auto, auto, @radius / 2);
+    }
+    &-2 {
+      .Base();
+      clip: rect(auto, @radius / 2, auto, 0);
+    }
+    &-3 {
+      .Base(75%, 75%);
+      z-index: 1;
+      background-color: inherit;
+    }
+  }
+}
