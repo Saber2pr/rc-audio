@@ -57,6 +57,7 @@ export const Audio = ({ src }: Audio) => {
     <span
       className="Audio"
       onClick={() => (statu === "pause" ? play() : pause())}
+      title={src}
     >
       <audio ref={ref} src={src} />
       {statu === "playing" ? <Icon.Bofang1 /> : <Icon.Bofang />}
