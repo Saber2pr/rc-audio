@@ -51,7 +51,7 @@ export const Audio = ({ src }: Audio) => {
     current < length ? rotate(percent) : reset()
   }
 
-  useInterval(statu === "playing", setProgress)
+  useInterval(setProgress, 1000, statu !== "playing")
 
   return (
     <span

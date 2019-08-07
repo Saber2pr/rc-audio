@@ -1,12 +1,17 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react"
 
-export const useInterval = (statu: boolean, cb: Function) => {
-  const [handle, setHandle] = useState(0);
+export const useInterval = (
+  callback: Function,
+  delay = 1000,
+  cancel = false
+) => {
   useEffect(() => {
-    if (statu) {
-      setHandle(setInterval(() => cb(), 1000) as any);
+    let handle: number
+    if (cancel) {
+      clearInterval(handle)
     } else {
-      clearInterval(handle);
+      handle = setInterval(callback, delay)
     }
-  }, [statu]);
-};
+    return () => clearInterval(handle)
+  }, [callback, delay, cancel])
+}
