@@ -9,14 +9,17 @@ import { Icon } from "../../iconfont"
 import { useInterval } from "../../hooks"
 import "./style.less"
 
+type Statu = "pause" | "playing"
+
 export interface Audio {
   src: string
-  onChange?: (statu: "pause" | "playing", element: HTMLAudioElement) => void
+  start?: number
+  onChange?: (statu: Statu, element: HTMLAudioElement) => void
 }
 
-export const Audio = ({ src, onChange }: Audio) => {
+export const Audio = ({ src, onChange, start }: Audio) => {
   const ref = useRef<HTMLAudioElement>()
-  const [statu, setStatu] = useState<"pause" | "playing">("pause")
+  const [statu, setStatu] = useState<Statu>("pause")
 
   const [radius, setRad] = useState(0)
   const [isFlip, flip] = useState(false)
@@ -55,8 +58,13 @@ export const Audio = ({ src, onChange }: Audio) => {
   useInterval(setProgress, 1000, statu !== "playing")
 
   useEffect(() => {
-    onChange && onChange(statu, ref.current)
+    return () => onChange && onChange(statu, ref.current)
   }, [statu])
+
+  useEffect(() => {
+    ref.current.currentTime = start || 0
+    play().catch(() => {})
+  }, [])
 
   return (
     <span
