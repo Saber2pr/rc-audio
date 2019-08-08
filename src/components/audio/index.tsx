@@ -14,10 +14,11 @@ type Statu = "pause" | "playing"
 export interface Audio {
   src: string
   start?: number
+  autoplay?: boolean
   onChange?: (statu: Statu, element: HTMLAudioElement) => void
 }
 
-export const Audio = ({ src, onChange, start }: Audio) => {
+export const Audio = ({ src, onChange, start, autoplay }: Audio) => {
   const ref = useRef<HTMLAudioElement>()
   const [statu, setStatu] = useState<Statu>("pause")
 
@@ -63,7 +64,7 @@ export const Audio = ({ src, onChange, start }: Audio) => {
 
   useEffect(() => {
     ref.current.currentTime = start || 0
-    play().catch(() => {})
+    autoplay && play().catch(() => {})
   }, [])
 
   return (

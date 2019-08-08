@@ -11,6 +11,7 @@ export const App = () => {
     <div className="App">
       {sta ? (
         <Audio
+          autoplay={!!time}
           src={a}
           start={time}
           onChange={(statu, audio) => {
