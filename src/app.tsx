@@ -7,7 +7,16 @@ export const App = () => {
   const [sta, setSta] = useState(true)
   return (
     <div className="App">
-      {sta ? <Audio src={a} /> : <span>hello</span>}
+      {sta ? (
+        <Audio
+          src={a}
+          onChange={(statu, audio) =>
+            console.log(statu, audio.currentTime, audio.duration)
+          }
+        />
+      ) : (
+        <span>hello</span>
+      )}
       <button onClick={() => setSta(!sta)}>change</button>
     </div>
   )

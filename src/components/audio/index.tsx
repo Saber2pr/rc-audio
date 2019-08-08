@@ -4,16 +4,17 @@
  * @Last Modified by: saber2pr
  * @Last Modified time: 2019-08-04 18:23:51
  */
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import { Icon } from "../../iconfont"
 import { useInterval } from "../../hooks"
 import "./style.less"
 
 export interface Audio {
   src: string
+  onChange?: (statu: "pause" | "playing", element: HTMLAudioElement) => void
 }
 
-export const Audio = ({ src }: Audio) => {
+export const Audio = ({ src, onChange }: Audio) => {
   const ref = useRef<HTMLAudioElement>()
   const [statu, setStatu] = useState<"pause" | "playing">("pause")
 
@@ -52,6 +53,10 @@ export const Audio = ({ src }: Audio) => {
   }
 
   useInterval(setProgress, 1000, statu !== "playing")
+
+  useEffect(() => {
+    onChange && onChange(statu, ref.current)
+  }, [statu])
 
   return (
     <span
