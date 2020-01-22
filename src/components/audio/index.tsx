@@ -62,7 +62,10 @@ export const Audio = ({ src, onChange, start, autoplay }: Audio) => {
     return () => onChange && onChange(statu, ref.current)
   }, [statu])
 
-  useEffect(() => reset(), [src])
+  useEffect(() => {
+    reset()
+    autoplay && play().catch(() => {})
+  }, [src])
 
   useEffect(() => {
     ref.current.currentTime = start || 0
